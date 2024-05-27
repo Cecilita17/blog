@@ -1,0 +1,94 @@
+.add-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    background-color: rgb(72, 72, 72);
+    padding: 20px;
+    text-align: start;
+}
+
+.add-h1{
+    color: rgb(255, 255, 255);
+    text-align: center;
+    font-size: 23px;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+.add-form {
+    
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    width: 900px;
+}
+
+.add-label {
+    background-color: transparent;
+
+}
+
+.add-input {
+    background-color: rgb(224, 222, 225);
+    border: none;
+    border-bottom: 2px solid blueviolet;
+    height: 20px;
+    outline: none;
+    margin-bottom: 10px;
+    width: 50%;
+    padding: 10px;
+}
+
+.add-textarea {
+    
+    background-color: rgb(224, 222, 225);
+    border: none;
+    border-bottom: 2px solid blueviolet;
+    outline: none;
+    margin-bottom: 10px;
+    width: 90%;
+    height: 200px;
+    padding: 10px;
+}
+
+.button {
+    background-color: rgb(154, 74, 229);
+    border: none;
+    border-radius: 59px 59px 59px 59px;
+    -moz-border-radius: 59px 59px 59px 59px;
+    -webkit-border-radius: 59px 59px 59px 59px;
+    border: 0px solid #000000;
+    color: white;
+    width: 70px;
+    margin-top: 10px;
+    padding: 5px;
+    font-weight: 700px;
+}
+.button:hover{
+    background-color: rgb(177, 113, 236);
+}
+
+@media only screen and (max-width: 600px){
+    .add-form{
+        width: 100% !important;
+    }
+    .add-container{
+        width: 100% !important;
+    }
+}
+
+@media only screen and (max-width: 900px){
+    .add-form{
+        width: 580px;
+    }
+    .add-container{
+        width: auto;
+        display: flex;
+        align-self: center;
+    }
+    
+}
+

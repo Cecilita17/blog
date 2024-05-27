@@ -1,0 +1,88 @@
+.navbar-container{
+    background-color: rgb(22, 22, 22);
+    height: 50px;
+    
+}
+ul{
+    margin: 0px;
+}
+li{
+    list-style: none;
+}
+
+.logo{
+    color: rgb(255, 255, 255) !important;
+    font-size: 24px;
+    font-weight: 500;
+    padding: 10px;
+    text-decoration: none;
+}
+.nav-link{
+    color: rgb(255, 255, 255) !important;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 10px;
+    text-decoration: none;
+    
+}
+
+.navbar-toggler-icon{
+    background-color: white;
+}
+.navbar-collapse{
+    padding: none;
+    
+}
+.navbar-collapse.show{
+    z-index: 3;
+}
+
+@media screen and (max-width: 425px){
+    .search-custom{
+        width: 100px !important ;
+    }
+    .search-bt-custom{
+        width: 40px;
+        background-color: rgb(212, 144, 144) !important;
+        border: none;
+    }
+}
+
+@media screen and (max-width: 984px){
+    .navbar-collapse{
+        position: relative;
+        top: 10px;
+        height: 180px;
+        background-color: rgb(212, 144, 144, 0.5);
+        backdrop-filter: blur(8px);
+        transition: none !important;
+       
+
+    }
+    .collapse.show{
+        padding: 10px;
+        margin: none;
+        border: none;
+
+    }
+    .nav-dropdown-customize{
+        display: none;
+    }
+    .form-customize{    
+        position: absolute;
+        top: -40px; 
+        right: 50px;
+    }
+    .navbar-toggler:focus {
+        border: none !important;
+        box-shadow: none !important;
+    }
+    
+    
+}
+
+@media screen and (min-width: 984px) {
+    .toggle-hide{
+        display: none !important;
+    }
+}
