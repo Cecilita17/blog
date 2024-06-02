@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, link, Link } from "react-router-dom";
 import axios from "axios";
 import "./PostDetail.css";
 
 const PostDetail = () => {
   const { post_id } = useParams();
-  const [post, setPost] = useState(null);
+  const [post, setPost] = useState("");
 
   useEffect(() => {
     const storedToken = localStorage.getItem("authToken");
@@ -36,10 +36,18 @@ const PostDetail = () => {
     );
   }
 
+  const renderTextWithParagraphs = (text) => {
+    if (!text) return null;
+    return text.split("\n").map((paragraph, index) => (
+      <p key={index}>{paragraph}</p>
+    ));
+  };
+
   return (
     <div className="post-detail-container">
       <h1 className="detail-title">{post.title}</h1>
-      <p className="detail-body">{post.text_body}</p>
+      <Link to={`/edit/${post_id}`}>Edit post</Link>
+      <div className="detail-body">{renderTextWithParagraphs(post.text_body)}</div>
     </div>
   );
 };

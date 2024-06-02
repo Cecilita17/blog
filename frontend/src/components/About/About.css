@@ -1,0 +1,31 @@
+.about-container{
+    display: flex;
+    flex-direction: column;
+    padding: 5px 30px;
+}
+.about-title{
+    display: flex;
+    align-items: center;
+    font-size: 18px; 
+}
+.line{
+    flex-grow: 1;
+    height: .5px;
+    margin-left: 10px;
+    background-color: #b9b9b9;
+}
+.img-about{
+    align-self: center;
+    width: 214px;
+  height: 214px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%; /* Ensures the container itself is circular */
+  overflow: hidden; /* Ensures any overflowing content is hidden */
+  background-color: #c8c7c7; /* Light grey background for placeholder */
+  position: relative;
+}
+.about-p{
+    padding: 20px 10px;
+}

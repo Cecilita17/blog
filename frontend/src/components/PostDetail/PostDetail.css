@@ -4,7 +4,7 @@
 }
 .post-detail-container {
   background-color: rgb(40, 39, 39);
-  height: 100%;
+  height: 100vh;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -18,17 +18,21 @@
   color: rgb(255, 255, 255);
   text-align: center;
   font-size: 40px;
-  font-weight: 600;
+  font-weight: 400;
+  font-family: "Poetsen One", sans-serif;
 }
 
 .detail-body {
   align-self: center;
   justify-self: center;
-  text-align: center;
+  text-align: start;
   padding: 30px;
   width: auto;
   height: 100%;
   color: antiquewhite;
+  /* font-family: "Poetsen One", sans-serif; */
+  font-family: "Josefin Sans", sans-serif;
+  font-weight: 400;
 }
 
 @media only screen and (max-width: 600px) {

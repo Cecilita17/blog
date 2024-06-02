@@ -1,24 +1,38 @@
 from django.shortcuts import render
 from rest_framework import viewsets 
-from .serializers import PostSerializer, CommentSerializer
-from .models import Post, Comment
+from .serializers import PostSerializer, CommentSerializer, CategorySerializer
+from .models import Post, Comment, Category
 from django.core.exceptions import PermissionDenied
 from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth import get_user_model
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.parsers import MultiPartParser, FormParser
+from rest_framework.filters import OrderingFilter
 
 User = get_user_model()
 
 
 # Views for post blog: 
+class CategoryViewSet(viewsets.ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    permission_classes = [IsAuthenticated]
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        self.perform_destroy(instance)
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 class PostDetailView(viewsets.ModelViewSet): 
     serializer_class = PostSerializer 
     queryset = Post.objects.all() 
     parser_classes = (MultiPartParser, FormParser)
     permission_classes = [IsAuthenticated]
+
+    filter_backends = [OrderingFilter]
+    ordering_fields = ['pub_date']  # Specify the fields you want to allow ordering by
+    ordering = ['-pub_date']  # Default ordering
 
     def perform_create(self, serializer): 
         serializer.save(author=self.request.user)

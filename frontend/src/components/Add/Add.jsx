@@ -1,23 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import "./Add.css";
 import AuthContext from "../../context/AuthContext";
+import Category from "../Category/Category";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 const Add = () => {
   const [title, setTitle] = useState("");
   const [textBody, setTextBody] = useState("");
   const [file, setFile] = useState(null);
+  const [filePreview, setFilePreview] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState("");
   const { currentUser } = React.useContext(AuthContext);
 
   const handleFileChange = (e) => {
     if (e.target.files) {
+      const objectURL = URL.createObjectURL(e.target.files[0]);
       setFile(e.target.files[0]);
+      setFilePreview(objectURL);
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const parsedUserId = JSON.parse(currentUser).id;
-    console.log("user id: " +parsedUserId);
+    console.log("user id: " + parsedUserId);
     const storedToken = localStorage.getItem("authToken");
     console.log("stored token is: " + storedToken);
 
@@ -26,9 +33,10 @@ const Add = () => {
     formData.append("title", title);
     formData.append("text_body", textBody);
     formData.append("image", file);
+    formData.append("categories", selectedCategory);
     if (parsedUserId) {
       formData.append("author", parsedUserId);
-    } else  {
+    } else {
       console.log("couldnt append userId to the form");
     }
 
@@ -47,6 +55,7 @@ const Add = () => {
         setTitle("");
         setTextBody("");
         setFile(null);
+        setSelectedCategory(null)
       } else {
         console.error("Error creating post:", response.statusText);
       }
@@ -55,11 +64,11 @@ const Add = () => {
     }
   };
 
-  /* console.log(typeof file); */
 
   return (
     <div className="add-container">
       <h1 className="add-h1">Add a Post:</h1>
+
       <form
         onSubmit={handleSubmit}
         className="add-form"
@@ -79,45 +88,47 @@ const Add = () => {
             setTitle(e.target.value);
           }}
         />
-        <label htmlFor="file">Add image</label>
-        <input
-          type="file"
-          id="file"
-          name="image"
-          accept="image/jpeg,image/png,image/gif"
-          style={{
-            height: "40px",
-            width: "300px",
-            marginBottom: "10px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: "5px",
-            border: "none",
-          }}
-          alt=""
-          onChange={handleFileChange}
-        />
-
-        {file && (
-          <img
-            src={file}
-            style={{ height: "300px", width: "600px", marginBottom: "10px" }}
-          />
-        )}
 
         <label htmlFor="text_body" className="add-label">
           Write your post here:
         </label>
-        <textarea
-          className="add-textarea"
-          id="text_body"
-          name="text_body"
+        <ReactQuill
           value={textBody}
-          onChange={(e) => {
-            setTextBody(e.target.value);
+          onChange={(value) => {
+            setTextBody(value);
           }}
-        ></textarea>
+          className="react-quill"
+        />
+
+        <div className="meta">
+            <input
+              type="file"
+              id="file"
+              name="image"
+              accept="image/jpeg,image/png,image/gif"
+              style={{
+                height: "40px",
+                width: "300px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                padding: "5px",
+                border: "none",
+              }}
+              alt=""
+              onChange={handleFileChange}
+            />
+          
+
+          {file && (
+            <img
+              src={filePreview}
+              style={{ height: "300px", width: "600px", marginBottom: "10px" }}
+            />
+          )}
+
+          <Category setSelectedCategory={setSelectedCategory} />
+        </div>
 
         <button className="button" type="submit">
           Submit

@@ -1,0 +1,56 @@
+.recent-container {
+  width: 300px;
+  padding: 5px 30px;
+}
+.h1-recent {
+  text-transform: uppercase;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+}
+.line{
+    flex-grow: 1;
+    height: .5px;
+    margin-left: 10px;
+    background-color: #b9b9b9;
+}
+.ul-recent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0px;
+}
+
+.last-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px;
+  width: 300px;
+  text-decoration: none;
+}
+
+.div-title-date {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 2px;
+}
+
+.img-recent {
+  width: 75px;
+  height: 75px;
+}
+
+.title-recent {
+  font-size: 16px;
+  margin-bottom: 0px;
+  color: black;
+}
+
+.post-date {
+  font-size: 13px;
+  color: #797979;
+}

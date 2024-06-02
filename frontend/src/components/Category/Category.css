@@ -1,0 +1,13 @@
+.category-container{
+    box-sizing: border-box;
+    height: fit-content;
+}
+
+.cat-button{
+    border: none;
+    background-color: transparent;
+    outline: none;
+    text-decoration: underline;
+}
+
+
