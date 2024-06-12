@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import viewsets 
-from .serializers import PostSerializer, CommentSerializer, CategorySerializer
-from .models import Post, Comment, Category
+from .serializers import PostSerializer, CommentSerializer, TagSerializer
+from .models import Post, Comment, Tag
 from django.core.exceptions import PermissionDenied
 from rest_framework.response import Response
 from rest_framework import status
@@ -14,15 +14,17 @@ User = get_user_model()
 
 
 # Views for post blog: 
-class CategoryViewSet(viewsets.ModelViewSet):
-    queryset = Category.objects.all()
-    serializer_class = CategorySerializer
+class TagViewSet(viewsets.ModelViewSet):
+    queryset = Tag.objects.all()
+    serializer_class = TagSerializer
     permission_classes = [IsAuthenticated]
 
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
         self.perform_destroy(instance)
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+from django.shortcuts import get_object_or_404
 
 class PostDetailView(viewsets.ModelViewSet): 
     serializer_class = PostSerializer 
@@ -55,7 +57,7 @@ class PostDetailView(viewsets.ModelViewSet):
             # Handle unauthorized retrieval (e.g., return 403 Forbidden)
             raise PermissionDenied("You are not the owner of this post.")
 
-    def update(self, request, pk):
+    def update(self, request, pk=None):
         post = self.get_object()  # Get the post instance based on the primary key
         serializer = self.serializer_class(post, data=request.data)
 
@@ -65,11 +67,10 @@ class PostDetailView(viewsets.ModelViewSet):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
-        # Handle unauthorized update (e.g., return 403 Forbidden)
+            # Handle unauthorized update (e.g., return 403 Forbidden)
             raise PermissionDenied("You are not the owner of this post.")
 
-
-    def destroy(self, instance, pk):
+    def destroy(self, request, pk=None):
         post = self.get_object()
         # Ensure the user deleting the post is the owner
         if self.request.user == post.author:
@@ -78,6 +79,7 @@ class PostDetailView(viewsets.ModelViewSet):
         else:
             # Handle unauthorized delete (e.g., return 403 Forbidden)
             raise PermissionDenied("You are not the owner of this post.")
+
 
 class CommentDetailView(viewsets.ModelViewSet): 
     serializer_class = CommentSerializer 

@@ -1,0 +1,70 @@
+.tag-container{
+    box-sizing: border-box;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-top: 20px;
+    width: 500px;
+}
+
+.add-tag{
+    background-color: rgb(243, 243, 243);
+    border: .5px solid rgb(209, 209, 209);
+    height: fit-content;
+    outline: none;
+    margin-bottom: 10px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.ul-tag{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    width: auto;
+    margin: 0px;
+}
+
+.tag-item{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 4px;
+    width: fit-content;
+    text-decoration: none;
+    background-color: rgb(243, 243, 243);
+    border: .5px solid rgb(209, 209, 209);
+    color: rgb(139, 138, 138);
+    font-size: 13px;
+}
+
+input{
+    height: auto;
+    border: none;
+    background-color: transparent;
+}
+
+.saved-tags{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: auto;
+    margin: 0px;
+}
+
+i{
+    background-color: rgb(201, 201, 201) !important;
+    color: rgb(190, 81, 81);
+    font-size: 7px;
+    border-radius: 50%;
+    width: 15px;
+    height: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

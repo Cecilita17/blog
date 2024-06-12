@@ -2,7 +2,7 @@ import { React, useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../Edit/Edit.css";
-import Category from "../Category/Category";
+
 
 const Edit = () => {
   const [title, setTitle] = useState("");
@@ -51,7 +51,6 @@ const Edit = () => {
     bodyFormData.append("title", title);
     bodyFormData.append("text_body", textBody);
     bodyFormData.append("image", file);
-    bodyFormData.append("category", selectedCategory);
 
     const storedToken = localStorage.getItem("authToken");
     axios.defaults.headers.common["Authorization"] = `Bearer ${storedToken}`;
@@ -132,8 +131,6 @@ const Edit = () => {
             setTextBody(e.target.value);
           }}
         ></textarea>
-
-        <Category setSelectedCategory={setSelectedCategory} />
 
         <button className="button" type="submit">
           Save

@@ -1,42 +1,44 @@
 from rest_framework import serializers 
-from .models import Post, Comment, Category
+from .models import Post, Comment, Tag
 
-class CategorySerializer(serializers.ModelSerializer):
+class TagSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Category
-        fields = ['id', 'name', 'description']
+        model = Tag
+        fields = ['id', 'name']
 
 class PostSerializer(serializers.ModelSerializer):
     image = serializers.ImageField(required=False)
-    categories = serializers.PrimaryKeyRelatedField(queryset=Category.objects.all(), many=True)
+    tags = serializers.PrimaryKeyRelatedField(queryset=Tag.objects.all(), many=True, required=False)
+
     class Meta:
         model = Post
-        fields = ('__all__')
+        fields = '__all__'  # '__all__' is a string, not a tuple
 
     def create(self, validated_data):
-        categories_data = validated_data.pop('categories', [])
+        tags_data = validated_data.pop('tags', [])
         post = Post.objects.create(**validated_data)
         
-        for category in categories_data:
-            post.categories.add(category)
+        for tag_data in tags_data:  # Corrected variable name
+            tag, created = Tag.objects.get_or_create(name=tag_data['name'])
+            post.tags.add(tag)
 
         return post
 
     def update(self, instance, validated_data):
-        categories_data = validated_data.pop('categories')
+        tags_data = validated_data.pop('tags', [])
         instance.title = validated_data.get('title', instance.title)
         instance.text_body = validated_data.get('text_body', instance.text_body)
         instance.image = validated_data.get('image', instance.image)
         instance.save()
 
-        instance.categories.clear()
-        for category_data in categories_data:
-            category, created = Category.objects.get_or_create(name=category_data['name'])
-            instance.categories.add(category)
+        instance.tags.clear()  # Corrected method name
+        for tag_data in tags_data:  # Corrected variable name
+            tag, created = Tag.objects.get_or_create(name=tag_data['name'])
+            instance.tags.add(tag)
 
         return instance
 
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
-        fields = ('__all__')
+        fields = '__all__'  # '__all__' is a string, not a tuple

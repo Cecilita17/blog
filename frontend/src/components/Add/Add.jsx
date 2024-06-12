@@ -1,17 +1,21 @@
 import React, { useState, useContext } from "react";
 import "./Add.css";
 import AuthContext from "../../context/AuthContext";
-import Category from "../Category/Category";
+import TagsContext from "../../context/TagsContext";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import Tags2 from "../Tags2/Tags2";
 
-const Add = () => {
+export const Add = () => {
   const [title, setTitle] = useState("");
   const [textBody, setTextBody] = useState("");
   const [file, setFile] = useState(null);
   const [filePreview, setFilePreview] = useState(null);
-  const [selectedCategory, setSelectedCategory] = useState("");
   const { currentUser } = React.useContext(AuthContext);
+
+  const { tags, setTags } = useContext(TagsContext);
+  const tagsMap = tags ? tags.map((tag) => tag.name) : [];
+  console.log("chosen tags: " + tagsMap);
 
   const handleFileChange = (e) => {
     if (e.target.files) {
@@ -33,7 +37,7 @@ const Add = () => {
     formData.append("title", title);
     formData.append("text_body", textBody);
     formData.append("image", file);
-    formData.append("categories", selectedCategory);
+    formData.append("tags", tagsMap);
     if (parsedUserId) {
       formData.append("author", parsedUserId);
     } else {
@@ -55,7 +59,7 @@ const Add = () => {
         setTitle("");
         setTextBody("");
         setFile(null);
-        setSelectedCategory(null)
+        setTags([]);
       } else {
         console.error("Error creating post:", response.statusText);
       }
@@ -63,7 +67,6 @@ const Add = () => {
       console.error("Error creating post:", error.message);
     }
   };
-
 
   return (
     <div className="add-container">
@@ -101,24 +104,25 @@ const Add = () => {
         />
 
         <div className="meta">
-            <input
-              type="file"
-              id="file"
-              name="image"
-              accept="image/jpeg,image/png,image/gif"
-              style={{
-                height: "40px",
-                width: "300px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                padding: "5px",
-                border: "none",
-              }}
-              alt=""
-              onChange={handleFileChange}
-            />
-          
+          <input
+            type="file"
+            id="file"
+            name="image"
+            accept="image/jpeg,image/png,image/gif"
+            style={{
+              height: "40px",
+              width: "300px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              alignSelf: "start",
+              padding: "5px",
+              marginTop: "20px",
+              border: "none",
+            }}
+            alt=""
+            onChange={handleFileChange}
+          />
 
           {file && (
             <img
@@ -126,8 +130,7 @@ const Add = () => {
               style={{ height: "300px", width: "600px", marginBottom: "10px" }}
             />
           )}
-
-          <Category setSelectedCategory={setSelectedCategory} />
+          {tags !== undefined && <Tags2 />}
         </div>
 
         <button className="button" type="submit">
