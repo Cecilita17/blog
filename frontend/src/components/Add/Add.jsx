@@ -14,8 +14,9 @@ export const Add = () => {
   const { currentUser } = React.useContext(AuthContext);
 
   const { tags, setTags } = useContext(TagsContext);
+  console.log("Tags in Add component:", tags);
   const tagsMap = tags ? tags.map((tag) => tag.name) : [];
-  console.log("chosen tags: " + tagsMap);
+  console.log("chosen tags: " + typeof tagsMap);
 
   const handleFileChange = (e) => {
     if (e.target.files) {
@@ -37,7 +38,7 @@ export const Add = () => {
     formData.append("title", title);
     formData.append("text_body", textBody);
     formData.append("image", file);
-    formData.append("tags", tagsMap);
+    formData.append("tags", JSON.stringify(tags));
     if (parsedUserId) {
       formData.append("author", parsedUserId);
     } else {
@@ -64,7 +65,11 @@ export const Add = () => {
         console.error("Error creating post:", response.statusText);
       }
     } catch (error) {
-      console.error("Error creating post:", error.message);
+      console.error("Error creating post:", error);
+      if (error.response) {
+        console.error("Response data:", error.response.data);
+        console.error("Response status:", error.response.status);
+      }
     }
   };
 
@@ -136,6 +141,12 @@ export const Add = () => {
         <button className="button" type="submit">
           Submit
         </button>
+        {
+          <p>
+            <p>Chosen tags: </p>
+            <p>{tagsMap}</p>
+          </p>
+        }
       </form>
     </div>
   );

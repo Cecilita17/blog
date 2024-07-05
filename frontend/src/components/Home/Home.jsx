@@ -31,7 +31,7 @@ function Home() {
         <Posts fetchedPosts={fetchedPosts} setFetchedPosts={setFetchedPosts} />
       </div>
       <div className="add">
-        <Add />
+        
       </div>
       {/* <div className="other">
         <p>Other content</p>

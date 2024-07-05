@@ -1,22 +1,17 @@
 import axios from "axios";
 import { React, useEffect, useState, createContext } from "react";
-import {Add} from '../components/Add/Add'
+import { Add } from "../components/Add/Add";
 
 const TagsContext = createContext();
 
 export const TagsProvider = ({ children }) => {
   const [retrievedTags, setRetrievedTags] = useState([]);
-  const [tags, setTags] = useState([name]);
+  const [tags, setTags] = useState([]);
   const [name, setName] = useState("");
-  
 
   useEffect(() => {
     const getTags = async () => {
       try {
-        const storedToken = localStorage.getItem("authToken");
-        axios.defaults.headers.common[
-          "Authorization"
-        ] = `Bearer ${storedToken}`;
         const response = await axios.get("http://127.0.0.1:8000/api/tag/");
         setRetrievedTags(response.data);
         console.log(response.data);
@@ -31,10 +26,6 @@ export const TagsProvider = ({ children }) => {
     if (event.key === "Enter" && name.trim()) {
       event.preventDefault();
       try {
-        const storedToken = localStorage.getItem("authToken");
-        axios.defaults.headers.common[
-          "Authorization"
-        ] = `Bearer ${storedToken}`;
         const response = await axios.post("http://127.0.0.1:8000/api/tag/", {
           name: name,
         });
@@ -57,8 +48,6 @@ export const TagsProvider = ({ children }) => {
 
   const removeTag = async (tag) => {
     try {
-      const storedToken = localStorage.getItem("authToken");
-      axios.defaults.headers.common["Authorization"] = `Bearer ${storedToken}`;
       const response = await axios.delete(
         `http://127.0.0.1:8000/api/tag/${tag.id}/`
       );
@@ -82,7 +71,7 @@ export const TagsProvider = ({ children }) => {
         handleAddExistingTag,
       }}
     >
-          <Add/>
+      {children}
     </TagsContext.Provider>
   );
 };

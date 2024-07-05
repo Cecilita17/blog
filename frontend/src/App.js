@@ -20,6 +20,7 @@ function App() {
   return (
     <div>
       <AuthProvider>
+        <TagsProvider>
           <Router>
             <NavbarComponent />
             <Routes>
@@ -35,6 +36,7 @@ function App() {
             </Routes>
             <Footer />
           </Router>
+        </TagsProvider>
       </AuthProvider>
     </div>
   );

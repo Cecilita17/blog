@@ -4,13 +4,20 @@ import TagsContext from "../../context/TagsContext";
 import "./Tags2.css";
 
 const Tags2 = () => {
-  const { tags, name, setName, handleCreateTag, handleAddExistingTag, retrievedTags, removeTag } =
-    useContext(TagsContext);
+  const {
+    tags,
+    name,
+    setName,
+    handleCreateTag,
+    handleAddExistingTag,
+    retrievedTags,
+    removeTag,
+  } = useContext(TagsContext);
 
   const handleRemoveTag = (tag) => () => {
     removeTag(tag);
-    };
-    
+  };
+
   return (
     <div className="tag-container">
       <ul className="saved-tags">
@@ -38,8 +45,7 @@ const Tags2 = () => {
           onKeyUp={handleCreateTag}
           onChange={(e) => setName(e.target.value)}
         />
-          </div>
-          <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quam porro distinctio odio, repellat dicta et adipisci animi, molestiae, numquam minima dolore quas quos ut ea. Quam eius ex laudantium nihil.</p>
+      </div>
     </div>
   );
 };
